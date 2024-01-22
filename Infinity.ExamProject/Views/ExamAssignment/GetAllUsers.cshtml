@@ -1,0 +1,48 @@
+﻿@model List<ListUserExamDto>
+
+@{
+    ViewData["Title"] = "GetAllUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Kullanıcı ID</th>
+            <th>İsim</th>
+            <th>Soyisim</th>
+            <th>Kullanıcı Adı</th>
+            <th>Sınav Adı</th>
+            <th>Başlangıç Zamanı</th>
+            <th>Bitiş Zamanı</th>
+            <th>Toplam süre</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userExamDto in Model)
+        {
+            <tr>
+                <td>@userExamDto.ListAppUserDto.Id</td>
+                <td>@userExamDto.ListAppUserDto.Name</td>
+                <td>@userExamDto.ListAppUserDto.Surname</td>
+                <td>@userExamDto.ListAppUserDto.Username</td>
+                <td>@userExamDto.ListExamDtos.FirstOrDefault()?.ExamName</td>
+                <td>@userExamDto.StartTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@userExamDto.EndTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@FormatTotalTime(userExamDto.StartTime, userExamDto.EndTime)</td>
+                <td><a href="/ExamAssignment/DeleteUserExam/@userExamDto.UsersExamsId" class="btn btn btn-outline-danger">Sil</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="/ExamAssignment/CreateExam/@ViewBag.Id" class="btn btn-outline-primary">Yeni Sınav Ekle</a>
+@functions {
+    public string FormatTotalTime(DateTime startTime, DateTime endTime)
+    {
+        TimeSpan totalTime = endTime - startTime;
+
+        string formattedTotalTime = $"{(int)totalTime.TotalHours:00}:{totalTime.Minutes:00}:{totalTime.Seconds:00}";
+        return formattedTotalTime;
+    }
+}

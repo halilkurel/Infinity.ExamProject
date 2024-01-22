@@ -1,0 +1,49 @@
+﻿@model List<ListOptionDto>
+@{
+    ViewData["Title"] = "Exam";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    int count = 0;
+}
+
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var examGroup in Model.GroupBy(item => item.ExamName))
+        {
+            <div class="col-md-12">
+                <h2>@examGroup.Key</h2>
+                <hr />
+
+                @foreach (var questionGroup in examGroup.GroupBy(item => item.QuestionId))
+                {
+                    count++;
+                    <h3>@count) @questionGroup.First().QuestionName</h3>
+
+                    <form id="formQuestionGroup@questionGroup.Key">
+                        @foreach (var option in questionGroup)
+                        {
+                            <label>
+                                <input type="radio" name="selectedOptionsForQuestion@questionGroup.Key" value="@option.OptionsId" />
+                                <strong>@option.OptionName </strong>
+                            </label>
+                            <br />
+                        }
+                    </form>
+
+                    <br />
+                    <br />
+                }
+                <br />
+                <br />
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button id="finishExamButton">Bitir</button>
+        </div>
+    </div>
+</div>
+

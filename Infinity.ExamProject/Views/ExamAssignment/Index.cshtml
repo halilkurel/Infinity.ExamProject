@@ -1,0 +1,46 @@
+﻿@model List<ListAppUserDto>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	int count = 0;
+}
+
+<div class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">Sınav Listesi</div>
+					</div>
+					<div class="card-body">
+						<table class="table mt-3">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Öğrenci Adı</th>
+									<th scope="col">Öğrenci Soyadı</th>
+									<th scope="col">Kullanıcı Adı</th>
+									<th scope="col">Sınav Ata</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									count++;
+									<tr>
+										<th>@count</th>
+										<td>@item.Name</td>
+										<td>@item.Surname</td>
+										<td>@item.Username</td>
+										<td><a href="/ExamAssignment/GetAllUsers/@item.Id" class="btn btn btn-outline-primary">Sınavlar</a></td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

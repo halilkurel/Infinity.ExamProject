@@ -1,0 +1,23 @@
+﻿@model UpdateExamDto
+@{
+    ViewData["Title"] = "UpdateExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="UpdateExam" method="post">
+
+    <div class="form-group">
+        <label for="CategoryId">Kategori Seçin:</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "CategoryName"))">
+            <option value="">-- Seçim Yapın --</option>
+        </select>
+        <div class="form-group">
+            <label for="ExamName">Sınav Adını Giriniz</label>
+            <input type="text" asp-for="ExamName" class="form-control" id="ExamName">
+        </div>
+
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="ExamId" />
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>

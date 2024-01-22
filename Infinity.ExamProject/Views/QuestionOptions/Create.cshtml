@@ -1,0 +1,72 @@
+﻿@model CreateQuestionOptionsDto
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="ExamId">Sınav Seçin:</label>
+        <select asp-for="QuestionDto.ExamId" class="form-control" asp-items="@(new SelectList(ViewBag.Exam, "ExamId", "ExamName"))">
+            <option value="">-- Seçim Yapın --</option>
+        </select>
+        <span asp-validation-for="QuestionDto.ExamId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="QuestionDto.QuestionName">Soru :</label>
+        <textarea asp-for="QuestionDto.QuestionName" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="QuestionDto.QuestionName" class="text-danger"></span>
+    </div>
+
+
+    <hr />
+
+    <div id="optionsContainer">
+        @for (int i = 0; i < Model.OptionsDto.Count; i++)
+        {
+            <div class="form-group">
+                <label asp-for="OptionsDto[i].OptionName">Seçenek :</label>
+                <input asp-for="OptionsDto[i].OptionName" class="form-control" />
+
+                <label asp-for="OptionsDto[i].CorrectOption" class="ml-2">Doğru Seçenek:</label>
+                <input asp-for="OptionsDto[i].CorrectOption" type="checkbox" class="ml-1" value="true" />
+
+                <span asp-validation-for="OptionsDto[i].OptionName" class="text-danger"></span>
+            </div>
+        }
+    </div>
+
+    <hr />
+
+    <button type="button" id="addOption" class="btn btn-primary">Yeni Seçenek Ekle</button>
+
+    <hr />
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+</form>
+
+<script>
+    var optionCount = @Model.OptionsDto.Count;
+
+    document.getElementById("addOption").addEventListener("click", function () {
+        var newOptionHtml = `
+                <div class="form-group">
+                    <label for="OptionsDto_${optionCount}__OptionName">Seçenek Adı:</label>
+                    <input type="text" id="OptionsDto_${optionCount}__OptionName" name="OptionsDto[${optionCount}].OptionName" class="form-control" />
+
+                    <label for="OptionsDto_${optionCount}__CorrectOption" class="ml-2">Doğru Seçenek:</label>
+                    <input type="checkbox" id="OptionsDto_${optionCount}__CorrectOption" name="OptionsDto[${optionCount}].CorrectOption" class="ml-1" value="true" />
+
+                    <span id="OptionsDto_${optionCount}__OptionName-error" class="text-danger"></span>
+                </div>`;
+
+        var newOptionContainer = document.createElement("div");
+        newOptionContainer.innerHTML = newOptionHtml;
+
+        document.getElementById("optionsContainer").appendChild(newOptionContainer);
+
+        optionCount++;
+    });
+</script>

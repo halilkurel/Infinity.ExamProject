@@ -1,0 +1,48 @@
+﻿@model List<ListUserExamDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sınav Adı</th>
+            <th>Başlangıç Zamanı</th>
+            <th>Bitiş Zamanı</th>
+            <th>Toplam süre</th>
+            <th>Giriş Yap</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userExamDto in Model)
+        {
+            <tr>
+                <td>@userExamDto.ListExamDtos.FirstOrDefault()?.ExamName</td>
+                <td>@userExamDto.StartTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@userExamDto.EndTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@FormatTotalTime(userExamDto.StartTime, userExamDto.EndTime)</td>
+                <td>
+                    @if (DateTime.Now >= userExamDto.StartTime && DateTime.Now <= userExamDto.EndTime)
+                    {
+                        <a href="/StudentPage/Exam/@userExamDto.ListExamDtos.FirstOrDefault()?.ExamId" class="btn btn-outline-primary">Girişi Yap</a>
+                    }
+                    else
+                    {
+                        <span class="btn btn-outline-secondary" disabled>Giriş Yap</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@functions {
+    public string FormatTotalTime(DateTime startTime, DateTime endTime)
+    {
+        TimeSpan totalTime = endTime - startTime;
+
+        string formattedTotalTime = $"{(int)totalTime.TotalHours:00}:{totalTime.Minutes:00}:{totalTime.Seconds:00}";
+        return formattedTotalTime;
+    }
+}

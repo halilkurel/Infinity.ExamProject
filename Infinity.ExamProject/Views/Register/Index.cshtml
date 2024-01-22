@@ -1,0 +1,48 @@
+﻿@model CreateNewUserDto
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Ogrenci Kayıt</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1>Kayıt İşlemi</h1>
+        <form method="post">
+            <div class="mb-3">
+                <label for="Name" class="form-label">İsim</label>
+                <input type="text" class="form-control" id="Name" name="Name" asp-for="Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="Surname" class="form-label">Soyisim</label>
+                <input type="text" class="form-control" id="Surname" name="Surname" asp-for="Surname" required>
+            </div>
+            <div class="mb-3">
+                <label for="Username" class="form-label">Kullanıcı Adı</label>
+                <input type="text" class="form-control" id="Username" name="Username" asp-for="Username" required>
+            </div>
+            <div class="mb-3">
+                <label for="Mail" class="form-label">Mail Adresi</label>
+                <input type="email" class="form-control" id="Mail" name="Mail" asp-for="Mail" required>
+            </div>
+            <div class="mb-3">
+                <label for="Password" class="form-label">Parola</label>
+                <input type="password" class="form-control" id="Password" name="Password" asp-for="Password" required>
+            </div>
+            <div class="mb-3">
+                <label for="ConfirmPassword" class="form-label">Parola Tekrar</label>
+                <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" asp-for="ConfirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Kayıt</button>
+        </form>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+</html>

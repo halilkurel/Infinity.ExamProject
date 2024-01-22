@@ -1,0 +1,41 @@
+﻿@model List<ListOptionDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 0;
+}
+
+<div class="container">
+    <div class="row">
+        @foreach (var examGroup in Model.GroupBy(item => item.ExamName))
+        {
+            <div class="col-md-12">
+                <h2>@examGroup.Key</h2>
+                <hr />
+
+                @foreach (var questionGroup in examGroup.GroupBy(item => item.QuestionId))
+                {
+                    count++;
+                    <h3>@count) @questionGroup.First().QuestionName</h3>
+
+                    <ul>
+                        @foreach (var option in questionGroup)
+                        {
+                            <li>
+                                <strong>@option.OptionName </strong> @(option.correctOption.HasValue && option.correctOption.Value ? "Doğru Seçenek" : " ")
+                            </li>
+                        }
+                    </ul>
+                    <td><a href="/QuestionOptions/Remove/@questionGroup.First().QuestionId" class="btn btn-outline-danger">Sil</a></td>
+                    <td><a href="/QuestionOptions/Update/@questionGroup.First().QuestionId" class="btn btn-outline-success">Güncelle</a></td>
+                    <br />
+                    <br />
+                }
+                <br />
+                <br />
+            </div>
+        }
+    </div>
+</div>
+<a href="/QuestionOptions/Create/@ViewBag.Questions" class="btn btn-outline-primary">Yeni Soru Ekle</a>

@@ -1,0 +1,31 @@
+﻿@model CreateUserExamDto
+@{
+    ViewData["Title"] = "CreateExam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="CreateExam" method="post">
+
+    <div class="form-group">
+        <input type="hidden" asp-for="AppUserId" value="@ViewBag.AppUserId" />
+        <label for="ExamId">Sınav Seçin:</label>
+        <select asp-for="ExamId" class="form-control" asp-items="@(new SelectList(ViewBag.Exams, "ExamId", "ExamName"))">
+            <option value="">-- Seçim Yapın --</option>
+        </select>
+        <span asp-validation-for="ExamId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="StartTime">Başlangıç Zamanı:</label>
+        <input type="datetime-local" asp-for="StartTime" class="form-control" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="EndTime">Bitiş Zamanı:</label>
+        <input type="datetime-local" asp-for="EndTime" class="form-control" />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ekle</button>
+</form>

@@ -1,0 +1,48 @@
+﻿@model Infinity.ExamProject.Dtos.QuestiionOptionsDtos.UpdateQuestionOptionDto
+
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Update</h1>
+
+<form asp-controller="QuestionOptions" asp-action="Update" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="QuestionDto.QuestionId" value="@Model.QuestionDto.QuestionId" />
+        <input type="hidden" asp-for="QuestionDto.ExamId" value="@Model.QuestionDto.ExamId" />
+    </div>
+    <div class="form-group">
+        <label asp-for="QuestionDto.QuestionName"></label>
+        <input asp-for="QuestionDto.QuestionName" class="form-control" />
+        <span asp-validation-for="QuestionDto.QuestionName" class="text-danger"></span>
+    </div>
+
+    <!-- Diğer soru özellikleri için form alanları ekleyebilirsiniz -->
+
+    <h3>Options</h3>
+
+    @for (int i = 0; i < Model.Options.Count; i++)
+    {
+        <div class="form-group">
+            <input type="hidden" asp-for="Options[i].OptionsId" />
+            <input type="hidden" asp-for="Options[i].QuestionId" />
+        </div>
+        <div class="form-group">
+            
+            <label asp-for="Options[i].OptionName">Soru : </label>
+            <input asp-for="Options[i].OptionName" class="form-control" />
+            <span asp-validation-for="Options[i].OptionName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Options[i].correctOption">Seçenek</label>
+            <input asp-for="Options[i].correctOption" type="checkbox" />
+            <span asp-validation-for="Options[i].correctOption" class="text-danger"></span>
+        </div>
+
+       
+    }
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+</form>
